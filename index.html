@@ -34,6 +34,7 @@
         p {
             color: #6b7280;
             line-height: 1.6;
+            margin-bottom: 1rem;
         }
         .button {
             background: #3b82f6;
@@ -44,7 +45,20 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
+            margin: 8px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .secondary-button {
+            background: #6b7280;
+        }
+        .instructions {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
             margin-top: 1rem;
+            text-align: left;
         }
     </style>
 </head>
@@ -52,20 +66,42 @@
     <div class="container">
         <div class="success-icon">✅</div>
         <h1>Inloggning lyckades!</h1>
-        <p>Du är nu inloggad i din app. Gå tillbaka till appen för att fortsätta.</p>
+        <p>Du är nu inloggad i din app.</p>
+        
         <button class="button" onclick="openApp()">Öppna app</button>
+        <button class="button secondary-button" onclick="copyInstructions()">Kopiera instruktioner</button>
+        
+        <div class="instructions">
+            <strong>Om appen inte öppnas automatiskt:</strong>
+            <ol>
+                <li>Gå tillbaka till din app</li>
+                <li>Tryck på "Kontrollera inloggning"</li>
+                <li>Du ska nu vara inloggad!</li>
+            </ol>
+        </div>
     </div>
 
     <script>
         function openApp() {
-            // Försök öppna appen
+            // Försök öppna appen med deep link
             window.location.href = 'mobile-starterkit://';
+            
+            // Fallback: visa instruktioner
+            setTimeout(() => {
+                alert('Om appen inte öppnades automatiskt, gå tillbaka till appen och tryck "Kontrollera inloggning".');
+            }, 1000);
         }
 
-        // Automatiskt försök öppna appen efter 2 sekunder
+        function copyInstructions() {
+            const instructions = 'Gå tillbaka till appen och tryck "Kontrollera inloggning" för att slutföra inloggningen.';
+            navigator.clipboard.writeText(instructions);
+            alert('Instruktioner kopierade!');
+        }
+
+        // Automatiskt försök öppna appen efter 1 sekund
         setTimeout(() => {
             openApp();
-        }, 2000);
+        }, 1000);
     </script>
 </body>
 </html> 
